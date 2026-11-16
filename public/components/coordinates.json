@@ -1,0 +1,33 @@
+{
+  "name": "Coordinates",
+  "description": "Displays your position, dimension and facing direction.",
+  "enabled": false,
+  "singleton": true,
+  "alignment": {
+    "horizontalAlignment": "Left",
+    "horizontalOffset": 15,
+    "verticalAlignment": "Top",
+    "verticalOffset": 112
+  },
+  "values": [
+    {
+      "type": "BOOLEAN",
+      "name": "ShowDimension",
+      "value": true
+    },
+    {
+      "type": "BOOLEAN",
+      "name": "ShowNetherCoords",
+      "value": false
+    },
+    {
+      "type": "INT",
+      "name": "Decimals",
+      "value": 0,
+      "range": {
+        "min": 0,
+        "max": 3
+      }
+    }
+  ]
+}

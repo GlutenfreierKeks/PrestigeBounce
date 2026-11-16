@@ -1,0 +1,40 @@
+{
+  "name": "Watermark",
+  "description": "Displays Claude branding, FPS, latency, time and server information.",
+  "enabled": true,
+  "singleton": true,
+  "alignment": {
+    "horizontalAlignment": "Left",
+    "horizontalOffset": 15,
+    "verticalAlignment": "Top",
+    "verticalOffset": 15
+  },
+  "values": [
+    {
+      "type": "BOOLEAN",
+      "name": "ShowFps",
+      "value": true
+    },
+    {
+      "type": "BOOLEAN",
+      "name": "ShowPing",
+      "value": true
+    },
+    {
+      "type": "BOOLEAN",
+      "name": "ShowTime",
+      "value": true
+    },
+    {
+      "type": "BOOLEAN",
+      "name": "ShowServer",
+      "value": false
+    },
+    {
+      "type": "CHOOSE",
+      "name": "TimeFormat",
+      "value": "24h",
+      "choices": ["24h", "12h"]
+    }
+  ]
+}

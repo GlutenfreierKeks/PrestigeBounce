@@ -1,0 +1,24 @@
+{
+  "name": "Ping",
+  "description": "Displays your current server latency with signal strength.",
+  "enabled": false,
+  "singleton": true,
+  "alignment": {
+    "horizontalAlignment": "Left",
+    "horizontalOffset": 115,
+    "verticalAlignment": "Top",
+    "verticalOffset": 56
+  },
+  "values": [
+    {
+      "type": "BOOLEAN",
+      "name": "ShowLabel",
+      "value": true
+    },
+    {
+      "type": "BOOLEAN",
+      "name": "ShowBars",
+      "value": true
+    }
+  ]
+}

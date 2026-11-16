@@ -1,0 +1,81 @@
+{
+  "id": "claude",
+  "name": "Claude",
+  "version": "0.1.0",
+  "authors": ["Claude"],
+  "splash": {
+    "animation": "splash/animation.json",
+    "background": "#0a0d1c",
+    "text": "#f1f0fa",
+    "accent": "#8b7cf6"
+  },
+  "colors": {
+    "Accent": "#8b7cf6",
+    "Tint": "#0a0d1c"
+  },
+  "screens": [
+    "clickgui",
+    "title",
+    "proxymanager",
+    "multiplayer",
+    "altmanager",
+    "customize",
+    "singleplayer"
+  ],
+  "overlays": [
+    "basicmenu",
+    "hud",
+    "inventory",
+    "container",
+    "connecting",
+    "disconnected",
+    "browser"
+  ],
+  "components": [
+    "Watermark",
+    "FPS",
+    "Ping",
+    "Coordinates",
+    "PlayerInfo",
+    "TabGui",
+    "ArrayList",
+    "Notifications",
+    "Hotbar",
+    "Scoreboard",
+    "ArmorItems",
+    "InventoryStatistics",
+    "Inventory",
+    "CraftingInventory",
+    "EnderChestInventory",
+    "TargetHud",
+    "BlockCounter",
+    "Effects",
+    "Keystrokes",
+    "Taco",
+    "Image",
+    "Text",
+    "KeyBinds",
+    "ClosedCaptions"
+  ],
+  "fonts": [
+    "PlayfairDisplay.ttf",
+    "PlayfairDisplay-Italic.ttf",
+    "Inter-Black.ttf",
+    "Inter-Bold.ttf",
+    "Inter-ExtraBold.ttf",
+    "Inter-ExtraLight.ttf",
+    "Inter-Light.ttf",
+    "Inter-Medium.ttf",
+    "Inter-Regular.ttf",
+    "Inter-SemiBold.ttf",
+    "Inter-Thin.ttf"
+  ],
+  "nativeFont": "Inter Medium",
+  "backgrounds": [
+    {
+      "name": "background",
+      "types": ["frag", "png"]
+    }
+  ],
+  "values": []
+}

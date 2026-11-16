@@ -1,0 +1,34 @@
+{
+  "name": "PlayerInfo",
+  "description": "Displays your skin, name, health and armor points.",
+  "enabled": false,
+  "singleton": true,
+  "alignment": {
+    "horizontalAlignment": "Left",
+    "horizontalOffset": 15,
+    "verticalAlignment": "Bottom",
+    "verticalOffset": 15
+  },
+  "values": [
+    {
+      "type": "BOOLEAN",
+      "name": "ShowHealth",
+      "value": true
+    },
+    {
+      "type": "BOOLEAN",
+      "name": "ShowArmor",
+      "value": true
+    },
+    {
+      "type": "BOOLEAN",
+      "name": "ShowGameMode",
+      "value": false
+    },
+    {
+      "type": "BOOLEAN",
+      "name": "ShowSkin",
+      "value": true
+    }
+  ]
+}
