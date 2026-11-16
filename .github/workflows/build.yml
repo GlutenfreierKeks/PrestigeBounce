@@ -56,8 +56,8 @@ jobs:
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git tag ${{ steps.version_tag.outputs.version }}
-          git push origin ${{ steps.version_tag.outputs.version }}
+          git tag "${{ steps.version_tag.outputs.version }}"
+          git push origin "${{ steps.version_tag.outputs.version }}"
 
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v1
@@ -68,12 +68,21 @@ jobs:
           name: "Build Release ${{ steps.version_tag.outputs.version }}"
 
       - name: Upload to LiquidBounce Marketplace
+        env:
+          API_TOKEN: ${{ secrets.API_TOKEN }}
         run: |
-          curl -X POST \
+          if [ -z "$API_TOKEN" ]; then
+            echo "ERROR: API_TOKEN is missing!"
+            exit 1
+          fi
+
+          echo "API Token found. Uploading to LiquidBounce Marketplace..."
+
+          curl --fail-with-body \
+            --request POST \
             "https://api.liquidbounce.net/api/v3/marketplace/${{ env.MARKETPLACE_ITEM_ID }}/revisions" \
-            -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" \
-            -F "file=@${{ env.ZIP_NAME }}.zip" \
-            -F "version=${{ steps.version_tag.outputs.version }}" \
-            -F "changelog=Automated build from commit ${{ github.sha }}" \
-            -F "channel=alpha" \
-            --fail-with-body
+            --header "Authorization: Bearer ${API_TOKEN}" \
+            --form "file=@${{ env.ZIP_NAME }}.zip" \
+            --form-string "version=${{ steps.version_tag.outputs.version }}" \
+            --form-string "changelog=Automated build from commit ${{ github.sha }}" \
+            --form-string "channel=alpha"
