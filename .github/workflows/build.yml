@@ -3,13 +3,14 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 env:
-  ZIP_NAME: theme            # Name for the distribution archive
-  MARKETPLACE_ITEM_ID: 12345        # Replace with your actual marketplace item ID
+  ZIP_NAME: Prestigebounce   # Name for the distribution archive
+  MARKETPLACE_ITEM_ID: 12345 # Replace with your actual marketplace item ID
 
 jobs:
   build:
