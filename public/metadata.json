@@ -1,8 +1,8 @@
 {
-  "id": "claude",
-  "name": "Claude",
+  "id": "prestigebounce",
+  "name": "Prestigebounce",
   "version": "0.1.0",
-  "authors": ["Claude"],
+  "authors": ["GlutenfreierKeks"],
   "splash": {
     "animation": "splash/animation.json",
     "background": "#0a0d1c",
