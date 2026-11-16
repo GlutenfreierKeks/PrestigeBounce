@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PrestigeBounce banner</title>
+<style>
+  @font-face {
+    font-family: "Playfair Display";
+    src: url("../public/fonts/PlayfairDisplay.ttf") format("truetype");
+    font-weight: 400 900;
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "Playfair Display";
+    src: url("../public/fonts/PlayfairDisplay-Italic.ttf") format("truetype");
+    font-weight: 400 900;
+    font-style: italic;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "Inter";
+    src: url("../public/fonts/Inter-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "Inter";
+    src: url("../public/fonts/Inter-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "Inter";
+    src: url("../public/fonts/Inter-SemiBold.ttf") format("truetype");
+    font-weight: 600;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "Inter";
+    src: url("../public/fonts/Inter-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-display: block;
+  }
+
+  :root {
+    --accent: #8b7cf6;
+    --glint: #b2a6ff;
+    --text: #f4f1fa;
+    --text-soft: #d9d7ea;
+    --text-dim: #aeacc8;
+    --text-muted: #777594;
+    --background: #070a16;
+    --card: #12162b;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    width: 1600px;
+    height: 900px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #000;
+  }
+
+  body {
+    font-family: "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
+
+  .banner {
+    position: relative;
+    width: 1600px;
+    height: 900px;
+    overflow: hidden;
+    isolation: isolate;
+    color: var(--text);
+    background:
+      radial-gradient(50% 72% at 77% 46%, rgba(139, 124, 246, .19) 0%, rgba(139, 124, 246, .075) 40%, transparent 72%),
+      radial-gradient(48% 58% at 0% 4%, rgba(139, 124, 246, .09) 0%, transparent 60%),
+      radial-gradient(52% 42% at 48% 112%, rgba(111, 88, 230, .11) 0%, transparent 72%),
+      linear-gradient(122deg, #070912 0%, #0a0d1c 42%, #0c0f22 69%, #11112a 100%);
+  }
+
+  /* Fine architectural grid, visible mostly behind the UI preview. */
+  .banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, .038) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, .038) 1px, transparent 1px);
+    background-size: 54px 54px;
+    -webkit-mask-image: radial-gradient(ellipse 52% 64% at 80% 46%, #000 7%, rgba(0,0,0,.55) 42%, transparent 74%);
+    mask-image: radial-gradient(ellipse 52% 64% at 80% 46%, #000 7%, rgba(0,0,0,.55) 42%, transparent 74%);
+    opacity: .85;
+  }
+
+  /* Soft diagonal sheen and a quiet vignette. */
+  .banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(114deg, transparent 30%, rgba(255, 255, 255, .026) 46%, transparent 62%),
+      radial-gradient(90% 62% at 50% 112%, rgba(0, 0, 0, .50), transparent 72%);
+  }
+
+  .halo {
+    position: absolute;
+    width: 720px;
+    height: 720px;
+    right: -150px;
+    top: -190px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(139, 124, 246, .32) 0%, rgba(139, 124, 246, .10) 43%, transparent 70%);
+    filter: blur(40px);
+    z-index: -1;
+  }
+
+  .content {
+    position: absolute;
+    left: 96px;
+    top: 142px;
+    width: 860px;
+    z-index: 2;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-dim);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 2.35px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .mark {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    flex: none;
+    border-radius: 50%;
+    background: linear-gradient(155deg, #c3baff 0%, #9b8bff 38%, #6d5ee0 100%);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, .12) inset,
+      0 0 24px rgba(139, 124, 246, .40);
+  }
+
+  .mark svg {
+    width: 15px;
+    height: 15px;
+    display: block;
+    color: #fff;
+  }
+
+  .eyebrow-rule {
+    width: 32px;
+    height: 1px;
+    margin-left: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .eyebrow-sep {
+    color: var(--accent);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 14px;
+    font-style: italic;
+    letter-spacing: 0;
+  }
+
+  .wordmark {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 39px;
+    line-height: .86;
+    letter-spacing: -.048em;
+    white-space: nowrap;
+  }
+
+  .wordmark-line {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .wordmark-name {
+    display: block;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 177px;
+    font-weight: 600;
+    color: var(--text);
+    text-shadow: 0 32px 80px rgba(0, 0, 0, .48);
+  }
+
+  .wordmark-name em {
+    font-weight: 500;
+    font-style: italic;
+    color: var(--glint);
+    background: linear-gradient(108deg, #ded7ff 0%, #b8acff 44%, #8b7cf6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 34px rgba(139, 124, 246, .24));
+  }
+
+  .wordmark-tag {
+    display: inline-block;
+    margin-left: 18px;
+    padding: 8px 11px 7px;
+    transform: translateY(-16px);
+    border-radius: 5px;
+    background: var(--accent);
+    color: #0c0f1f;
+    font-family: "Inter", sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.7px;
+    line-height: 1;
+    text-transform: uppercase;
+    box-shadow: 0 10px 28px rgba(139, 124, 246, .24);
+  }
+
+  .subtitle {
+    margin-top: 27px;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 28px;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -.005em;
+    color: var(--text-soft);
+  }
+
+  .lede {
+    max-width: 670px;
+    margin-top: 11px;
+    color: var(--text-dim);
+    font-size: 16.5px;
+    font-weight: 400;
+    line-height: 1.64;
+    letter-spacing: .02px;
+  }
+
+  .features {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    margin-top: 40px;
+    color: var(--text-muted);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.85px;
+    text-transform: uppercase;
+  }
+
+  .feature {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .feature::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px rgba(139, 124, 246, .6);
+  }
+
+  .feature-rule {
+    width: 1px;
+    height: 10px;
+    background: rgba(255, 255, 255, .10);
+  }
+
+  .note {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-top: 47px;
+    color: rgba(174, 172, 200, .72);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 17px;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: .005em;
+  }
+
+  .note-line {
+    width: 46px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(139, 124, 246, .7), transparent);
+  }
+
+  .footer {
+    position: absolute;
+    left: 96px;
+    bottom: 50px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: rgba(119, 117, 148, .78);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.9px;
+    text-transform: uppercase;
+    z-index: 2;
+    white-space: nowrap;
+  }
+
+  .footer-line {
+    width: 75px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(139, 124, 246, .65), transparent);
+  }
+
+  .footer-id {
+    color: var(--text-muted);
+  }
+
+  .footer-id span {
+    color: var(--glint);
+  }
+
+  /* ---------- UI preview ---------- */
+
+  .preview {
+    position: absolute;
+    top: 132px;
+    left: 1000px;
+    width: 544px;
+    height: 650px;
+    z-index: 3;
+  }
+
+  .preview-back {
+    position: absolute;
+    inset: 16px -16px -16px 18px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, .055);
+    background: linear-gradient(160deg, rgba(20, 24, 47, .46), rgba(8, 10, 24, .35));
+    opacity: .75;
+  }
+
+  .preview-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, .09);
+    background:
+      radial-gradient(120% 100% at 8% -14%, rgba(139, 124, 246, .15), transparent 48%),
+      radial-gradient(90% 100% at 108% 108%, rgba(139, 124, 246, .07), transparent 58%),
+      linear-gradient(165deg, rgba(20, 24, 47, .94) 0%, rgba(13, 16, 34, .97) 55%, rgba(9, 11, 25, .98) 100%);
+    box-shadow:
+      0 46px 120px rgba(0, 0, 0, .62),
+      0 0 82px rgba(139, 124, 246, .10),
+      inset 0 1px 0 rgba(255, 255, 255, .06);
+  }
+
+  .preview-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(178, 166, 255, .55) 24%, rgba(178, 166, 255, .18) 62%, transparent);
+    z-index: 1;
+  }
+
+  .preview-head {
+    padding: 29px 30px 0;
+  }
+
+  .preview-kicker {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-muted);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.9px;
+    text-transform: uppercase;
+  }
+
+  .preview-kicker-left {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .preview-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: color-mix(in srgb, var(--glint) 78%, var(--text-muted));
+    letter-spacing: 1.5px;
+  }
+
+  .preview-live::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #8ee3bb;
+    box-shadow: 0 0 7px rgba(142, 227, 187, .7);
+  }
+
+  .preview-title-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+
+  .preview-title {
+    font-family: "Playfair Display", Georgia, serif;
+    color: var(--text);
+    font-size: 39px;
+    font-weight: 600;
+    letter-spacing: -.025em;
+    line-height: 1;
+  }
+
+  .preview-count {
+    padding-bottom: 6px;
+    color: var(--text-muted);
+    font-size: 9.5px;
+    font-weight: 500;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 42px;
+    margin-top: 21px;
+    padding: 0 14px;
+    border: 1px solid rgba(255, 255, 255, .07);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .026);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .search svg {
+    width: 15px;
+    height: 15px;
+    flex: none;
+    color: var(--text-muted);
+  }
+
+  .search-rule {
+    width: 1px;
+    height: 14px;
+    margin-left: auto;
+    background: rgba(255, 255, 255, .10);
+  }
+
+  .search-hint {
+    margin-left: 8px;
+    color: rgba(119, 117, 148, .8);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .module-list {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+    padding: 0 20px;
+    min-height: 0;
+  }
+
+  .module {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+    min-height: 0;
+    padding: 9px 15px;
+    border: 1px solid rgba(255, 255, 255, .062);
+    border-radius: 10px;
+    background:
+      linear-gradient(100deg, rgba(139, 124, 246, .055), transparent 48%),
+      rgba(255, 255, 255, .022);
+  }
+
+  .module-copy {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .module-name {
+    color: var(--text);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    line-height: 1.15;
+  }
+
+  .module-desc {
+    overflow: hidden;
+    color: var(--text-muted);
+    font-size: 10.5px;
+    font-weight: 400;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .module-chevron {
+    color: rgba(174, 172, 200, .48);
+    font-size: 19px;
+    line-height: 1;
+    transform: translateY(-1px);
+  }
+
+  .toggle {
+    position: relative;
+    width: 32px;
+    height: 18px;
+    flex: none;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .09);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07);
+  }
+
+  .toggle::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #d9d7ea;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .35);
+  }
+
+  .module.on .toggle {
+    background: linear-gradient(180deg, #9a8cf8, #7666e8);
+    box-shadow:
+      0 0 16px rgba(139, 124, 246, .30),
+      inset 0 0 0 1px rgba(255, 255, 255, .15);
+  }
+
+  .module.on .toggle::after {
+    left: 17px;
+    background: #f8f6ff;
+  }
+
+  .palette-strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 58px;
+    margin: 13px 20px 0;
+    padding: 0 12px;
+    border-top: 1px solid rgba(255, 255, 255, .05);
+    color: var(--text-muted);
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+  }
+
+  .swatches {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .swatch {
+    display: block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--sw);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .12) inset;
+  }
+
+  .palette-strip .palette-right {
+    margin-left: auto;
+    color: rgba(119, 117, 148, .7);
+    letter-spacing: 1.2px;
+  }
+
+  .preview-foot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 30px;
+    height: 50px;
+    flex: none;
+    border-top: 1px solid rgba(255, 255, 255, .055);
+    color: var(--text-muted);
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .preview-foot::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #8ee3bb;
+    box-shadow: 0 0 8px rgba(142, 227, 187, .65);
+  }
+
+  .preview-foot .foot-right {
+    margin-left: auto;
+    color: rgba(119, 117, 148, .72);
+  }
+
+  .preview-orbit {
+    position: absolute;
+    top: -72px;
+    right: -96px;
+    width: 390px;
+    height: 390px;
+    border: 1px solid rgba(139, 124, 246, .10);
+    border-radius: 50%;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .preview-orbit::before {
+    content: "";
+    position: absolute;
+    inset: 50px;
+    border: 1px solid rgba(139, 124, 246, .07);
+    border-radius: 50%;
+  }
+</style>
+</head>
+<body>
+  <main class="banner" id="banner" aria-label="PrestigeBounce — a LiquidBounce theme">
+    <div class="halo"></div>
+
+    <section class="content">
+      <div class="eyebrow">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.4c.7 5.7 3.9 8.9 9.6 9.6-5.7.7-8.9 3.9-9.6 9.6-.7-5.7-3.9-8.9-9.6-9.6 5.7-.7 8.9-3.9 9.6-9.6Z" fill="currentColor"/>
+          </svg>
+        </span>
+        <span>A LiquidBounce theme</span>
+        <span class="eyebrow-rule"></span>
+        <span class="eyebrow-sep">Editorial UI</span>
+      </div>
+
+      <h1 class="wordmark">
+        <span class="wordmark-line"><span class="wordmark-name">Prestige</span></span>
+        <span class="wordmark-line"><span class="wordmark-name"><em>Bounce</em></span><span class="wordmark-tag">Theme</span></span>
+      </h1>
+
+      <p class="subtitle">A calmer way to drive LiquidBounce.</p>
+      <p class="lede">Deep navy surfaces, soft violet accents and editorial typography — wrapped around every screen of the client.</p>
+
+      <div class="features">
+        <span class="feature">ClickGUI</span>
+        <span class="feature-rule"></span>
+        <span class="feature">HUD editor</span>
+        <span class="feature-rule"></span>
+        <span class="feature">22 palettes</span>
+        <span class="feature-rule"></span>
+        <span class="feature">Live client data</span>
+      </div>
+
+      <p class="note"><span class="note-line"></span>Inspired by the Prestige client GUI.</p>
+    </section>
+
+    <div class="footer">
+      <span class="footer-line"></span>
+      <span class="footer-id">Built for <span>LiquidBounce</span></span>
+    </div>
+
+    <aside class="preview" aria-label="ClickGUI preview">
+      <span class="preview-orbit" aria-hidden="true"></span>
+      <div class="preview-back" aria-hidden="true"></div>
+      <div class="preview-card">
+        <div class="preview-head">
+          <div class="preview-kicker">
+            <span class="preview-kicker-left">Modules / Combat</span>
+            <span class="preview-live">Live data</span>
+          </div>
+          <div class="preview-title-row">
+            <div class="preview-title">Combat Modules</div>
+            <div class="preview-count">ClickGUI</div>
+          </div>
+          <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <circle cx="11" cy="11" r="6.5"></circle>
+              <path d="m16 16 4.2 4.2" stroke-linecap="round"></path>
+            </svg>
+            <span>Search modules</span>
+            <span class="search-rule"></span>
+            <span class="search-hint">FILTER</span>
+          </div>
+        </div>
+
+        <div class="module-list">
+          <div class="module">
+            <div class="module-copy">
+              <div class="module-name">AimBot</div>
+              <div class="module-desc">Automatically faces targets nearby.</div>
+            </div>
+            <span class="module-chevron">›</span>
+            <span class="toggle" aria-hidden="true"></span>
+          </div>
+          <div class="module on">
+            <div class="module-copy">
+              <div class="module-name">Auto Armor</div>
+              <div class="module-desc">Automatically equips the best armor in your inventory.</div>
+            </div>
+            <span class="module-chevron">›</span>
+            <span class="toggle" aria-hidden="true"></span>
+          </div>
+          <div class="module on">
+            <div class="module-copy">
+              <div class="module-name">Auto Dodge</div>
+              <div class="module-desc">Automatically dodges projectiles like arrows.</div>
+            </div>
+            <span class="module-chevron">›</span>
+            <span class="toggle" aria-hidden="true"></span>
+          </div>
+          <div class="module">
+            <div class="module-copy">
+              <div class="module-name">Auto Bow</div>
+              <div class="module-desc">Automates many bow-related actions like aiming and shooting.</div>
+            </div>
+            <span class="module-chevron">›</span>
+            <span class="toggle" aria-hidden="true"></span>
+          </div>
+          <div class="module">
+            <div class="module-copy">
+              <div class="module-name">Auto Clicker</div>
+              <div class="module-desc">Clicks automatically when holding down the attack button.</div>
+            </div>
+            <span class="module-chevron">›</span>
+            <span class="toggle" aria-hidden="true"></span>
+          </div>
+        </div>
+
+        <div class="palette-strip">
+          <span>Accent</span>
+          <span class="swatches" aria-hidden="true">
+            <span class="swatch" style="--sw:#8b7cf6"></span>
+            <span class="swatch" style="--sw:#b2a6ff"></span>
+            <span class="swatch" style="--sw:#6f5be0"></span>
+            <span class="swatch" style="--sw:#45bdf5"></span>
+            <span class="swatch" style="--sw:#8ee3bb"></span>
+            <span class="swatch" style="--sw:#ffc247"></span>
+          </span>
+          <span class="palette-right">22 palettes</span>
+        </div>
+
+        <div class="preview-foot">
+          Client API connected
+          <span class="foot-right">Synced live</span>
+        </div>
+      </div>
+    </aside>
+  </main>
+</body>
+</html>

@@ -15,7 +15,7 @@ Deep navy surfaces, soft violet accents and editorial typography — wrapped aro
 
 </div>
 
-![Prestigebounce title screen](docs/screenshots/title.png)
+![PrestigeBounce — a LiquidBounce theme](docs/screenshots/banner.png)
 
 ## Overview
 
