@@ -17,7 +17,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,7 +27,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: npm
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
@@ -37,7 +36,7 @@ jobs:
         run: npm run build
 
       - name: Create dist archive
-        run: zip -r "${ZIP_NAME}.zip" dist/
+        run: zip -r ${{ env.ZIP_NAME }}.zip dist/
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -50,15 +49,16 @@ jobs:
         run: |
           COMMIT_HASH=$(git rev-parse --short HEAD)
           TAG="build-$COMMIT_HASH-$(date +'%Y%m%d%H%M%S')"
-          echo "version=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$TAG" >> $GITHUB_OUTPUT
 
+  
       - name: Create and push Git tag
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git tag "${{ steps.version_tag.outputs.version }}"
-          git push origin "${{ steps.version_tag.outputs.version }}"
-
+          git tag ${{ steps.version_tag.outputs.version }}
+          git push origin ${{ steps.version_tag.outputs.version }}
+      
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v1
         with:
@@ -66,23 +66,14 @@ jobs:
           tag_name: ${{ steps.version_tag.outputs.version }}
           prerelease: true
           name: "Build Release ${{ steps.version_tag.outputs.version }}"
-
+      
       - name: Upload to LiquidBounce Marketplace
-        env:
-          API_TOKEN: ${{ secrets.API_TOKEN }}
         run: |
-          if [ -z "$API_TOKEN" ]; then
-            echo "ERROR: API_TOKEN is missing!"
-            exit 1
-          fi
-
-          echo "API Token found. Uploading to LiquidBounce Marketplace..."
-
-          curl --fail-with-body \
-            --request POST \
+          curl -X POST \
             "https://api.liquidbounce.net/api/v3/marketplace/${{ env.MARKETPLACE_ITEM_ID }}/revisions" \
-            --header "Authorization: Bearer ${API_TOKEN}" \
-            --form "file=@${{ env.ZIP_NAME }}.zip" \
-            --form-string "version=${{ steps.version_tag.outputs.version }}" \
-            --form-string "changelog=Automated build from commit ${{ github.sha }}" \
-            --form-string "channel=alpha"
+            -H "Authorization: Bearer ${{ secrets.API_TOKEN }}" \
+            -F "file=@${{ env.ZIP_NAME }}.zip" \
+            -F "version=${{ steps.version_tag.outputs.version }}" \
+            -F "changelog=Automated build from commit ${{ github.sha }}" \
+            -F "channel=alpha" \
+            --fail-with-body
