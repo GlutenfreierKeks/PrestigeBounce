@@ -77,7 +77,7 @@ Motion is used sparingly: menus, module cards, HUD elements and overlays fade an
 - Staggered module and navigation entrances in the ClickGUI
 - Animated view changes, tag menus, view switches and toast feedback
 - HUD component entrances plus watermark, hotbar, TabGUI and notification accents
-- Motion is limited to opacity and transforms — no ClickGUI or HUD layout changes
+- Motion never reflows the ClickGUI or HUD — every control keeps its static size and position
 
 ### Customization
 
