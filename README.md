@@ -211,15 +211,9 @@ To install the build, copy the entire `dist` folder into your LiquidBounce theme
 
 ## Marketplace publishing
 
-To publish Prestigebounce to the [LiquidBounce Marketplace](https://liquidbounce.net/marketplace):
+Prestigebounce is published to the [LiquidBounce Marketplace](https://liquidbounce.net/marketplace) through GitHub Actions. Every push to `main` builds the theme, creates a tagged pre-release with the installable ZIP and uploads a new revision to the configured marketplace item.
 
-1. Generate an API token at [liquidbounce.net/account](https://liquidbounce.net/account).
-2. Copy the marketplace item ID from your item page.
-3. Add `API_TOKEN` as a repository secret under **Settings → Secrets and variables → Actions**.
-4. Set `MARKETPLACE_ITEM_ID` and `ZIP_NAME` in `.github/workflows/build.yml`.
-5. Uncomment the GitHub release and marketplace upload steps in that workflow.
-
-Once configured, the workflow builds and publishes the theme automatically when triggered.
+The workflow reads `MARKETPLACE_ITEM_ID` and `ZIP_NAME` from `.github/workflows/build.yml` and authenticates with the `API_TOKEN` repository secret. New revisions are reviewed by the LiquidBounce team before they become the live version on the marketplace.
 
 ## Project structure
 
@@ -238,7 +232,7 @@ PrestigeBounce/
 │   ├── components/            shared wordmark and logo components
 │   ├── integration/           REST client, WebSocket events, router and helpers
 │   ├── routes/
-│   │   ├── clickgui/claude/   Claude design system and ClickGUI views
+│   │   ├── clickgui/claude/   ClickGUI design system and views
 │   │   ├── hud/               HUD renderer, elements and editor
 │   │   ├── menu/              title, singleplayer, multiplayer, alt manager, proxy manager
 │   │   ├── inventory/         inventory and container overlays
