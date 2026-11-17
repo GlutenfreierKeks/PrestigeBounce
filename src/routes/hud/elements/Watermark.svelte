@@ -1,6 +1,6 @@
 <script lang="ts">
     import {onDestroy, onMount} from "svelte";
-    import ClaudeWordmark from "../../../components/ClaudeWordmark.svelte";
+    import PrestigeWordmark from "../../../components/PrestigeWordmark.svelte";
     import Icon from "../../clickgui/claude/Icon.svelte";
     import {getClientInfo, getConnectionDetails, getPlayerData} from "../../../integration/rest";
     import {listen} from "../../../integration/ws";
@@ -43,7 +43,7 @@
             const info = await getClientInfo();
             if (!fps) fps = info.fps ?? 0;
         } catch (error) {
-            console.warn("[Claude] Could not load client info for watermark", error);
+            console.warn("[PrestigeBounce] Could not load client info for watermark", error);
         }
 
         try {
@@ -86,8 +86,8 @@
 <div class="watermark">
     <span class="brand-mark"><Icon name="crown" size={11}/></span>
     <div class="brand">
-        <ClaudeWordmark size={18} tag={false}/>
-        <span class="client-tag">Client</span>
+        <PrestigeWordmark size={17} tag={false}/>
+        <span class="client-tag">Theme</span>
     </div>
 
     <span class="divider"></span>
@@ -153,6 +153,19 @@
       background: linear-gradient(90deg, var(--hud-accent), transparent);
       opacity: .85;
     }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: -45%;
+      bottom: -45%;
+      left: -50%;
+      width: 46%;
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--hud-text) 7%, transparent), transparent);
+      transform: translateX(-160%) skewX(-18deg);
+      animation: watermark-sheen 7.2s ease-in-out infinite;
+    }
   }
 
   .brand-mark {
@@ -165,6 +178,7 @@
     color: #f5eeff;
     background: linear-gradient(160deg, color-mix(in srgb, var(--hud-accent) 92%, white), color-mix(in srgb, var(--hud-accent) 58%, #251e5c));
     box-shadow: 0 0 12px color-mix(in srgb, var(--hud-accent) 36%, transparent);
+    animation: mark-breathe 5s ease-in-out infinite;
   }
 
   .brand {
@@ -207,6 +221,7 @@
     color: var(--hud-text-dim);
     font-size: 9px;
     font-variant-numeric: tabular-nums;
+    transition: color .3s ease;
 
     :global(svg) {
       color: color-mix(in srgb, var(--hud-text-muted) 88%, transparent);
@@ -241,6 +256,7 @@
       border-radius: 50%;
       background: currentColor;
       box-shadow: 0 0 7px currentColor;
+      animation: ping-dot-pulse 2.6s ease-in-out infinite;
     }
 
     &.good { color: #74d39a; }
@@ -263,5 +279,21 @@
       font-weight: 500;
       color: var(--hud-text-dim);
     }
+  }
+
+  @keyframes watermark-sheen {
+    0%, 62% { transform: translateX(-160%) skewX(-18deg); opacity: 0; }
+    70% { opacity: .85; }
+    92%, 100% { transform: translateX(340%) skewX(-18deg); opacity: 0; }
+  }
+
+  @keyframes mark-breathe {
+    0%, 100% { box-shadow: 0 0 10px color-mix(in srgb, var(--hud-accent) 26%, transparent); }
+    50% { box-shadow: 0 0 18px color-mix(in srgb, var(--hud-accent) 48%, transparent); }
+  }
+
+  @keyframes ping-dot-pulse {
+    0%, 100% { transform: scale(1); opacity: .82; }
+    50% { transform: scale(1.35); opacity: 1; }
   }
 </style>

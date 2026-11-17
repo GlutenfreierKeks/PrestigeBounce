@@ -1,7 +1,6 @@
 <script lang="ts">
     import Icon from "./Icon.svelte";
     import {fly} from "svelte/transition";
-
     let {
         message,
         icon = "sparkles"
@@ -11,7 +10,12 @@
     }>();
 </script>
 
-<div class="toast" transition:fly={{y: 14, duration: 220}} role="status">
+<div
+        class="toast"
+        in:fly={{y: 14, duration: 220}}
+        out:fly={{y: -6, duration: 170}}
+        role="status"
+>
     <span class="icon"><Icon name={icon} size={14}/></span>
     <span>{message}</span>
 </div>
@@ -44,5 +48,11 @@
     border-radius: 6px;
     color: var(--claude-accent);
     background: color-mix(in srgb, var(--claude-accent) 13%, transparent);
+    animation: toast-icon-in .34s cubic-bezier(.2, .8, .25, 1) backwards;
+  }
+
+  @keyframes toast-icon-in {
+    from { opacity: 0; transform: scale(.72) rotate(-8deg); }
+    to { opacity: 1; transform: scale(1) rotate(0); }
   }
 </style>

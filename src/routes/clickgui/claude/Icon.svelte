@@ -26,6 +26,14 @@
 >
     {#if name === "crown"}
         <path d="M2.8 8.2 7 11.7l5-7 5 7 4.2-3.5-1.9 10.3H4.7L2.8 8.2Z" fill="currentColor" stroke="none"/>
+    {:else if name === "clipboard"}
+        <rect x="5" y="4" width="14" height="17" rx="2"/>
+        <path d="M9 4.5V3.2h6v1.3M8.5 10h7M8.5 14h5"/>
+    {:else if name === "food"}
+        <path d="M15.6 4.4a4.2 4.2 0 0 1 4 4c0 1.1-.4 2.1-1.2 2.8l-6.4 6.4a4.2 4.2 0 1 1-5.6-5.6l6.4-6.4a4 4 0 0 1 2.8-1.2Z"/>
+        <path d="m8.8 15.2-3.4 3.4"/>
+    {:else if name === "signal"}
+        <path d="M4 20v-3M9.3 20v-6M14.7 20v-9M20 20V7"/>
     {:else if name === "combat"}
         <circle cx="13.5" cy="4.5" r="2"/>
         <path d="m9 20 2.4-5.2L8 12.5l1.3-4.2 4.4-1.1 3 3 2.8 1.2"/>

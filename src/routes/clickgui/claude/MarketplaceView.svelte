@@ -61,7 +61,7 @@
             pagination = result.pagination;
         } catch (error) {
             if (request !== generation) return;
-            console.error(`[Claude] Could not load ${type.toLowerCase()}s`, error);
+            console.error(`[PrestigeBounce] Could not load ${type.toLowerCase()}s`, error);
             failed = error instanceof Error ? error.message : "The marketplace could not be reached.";
             items = [];
             pagination = {current: 1, pages: 1, items: 0};

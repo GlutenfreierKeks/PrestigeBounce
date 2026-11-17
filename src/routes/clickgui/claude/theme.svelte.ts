@@ -14,8 +14,8 @@ const ACCENT_STORAGE_KEY = "claude.theme.accent";
 export const themes: ClaudeTheme[] = [
     {
         id: "claude",
-        name: "Claude",
-        description: "Glass + violet. The signature Claude theme",
+        name: "Prestige",
+        description: "Glass + violet. The signature PrestigeBounce theme",
         accent: "#8b7cf6",
         background: "#0a0d1c",
         card: "#12162b",

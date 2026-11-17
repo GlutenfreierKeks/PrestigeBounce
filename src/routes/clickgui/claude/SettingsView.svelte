@@ -59,7 +59,7 @@
             menuBind = findBind(settings.value);
             fallbackBind = menuBind ? null : formatKey(module.keyBind.boundKey);
         } catch (error) {
-            console.error("[Claude] Could not load the menu bind", error);
+            console.error("[PrestigeBounce] Could not load the menu bind", error);
             menuFailed = true;
         } finally {
             menuLoading = false;
@@ -72,7 +72,7 @@
         try {
             globalSettings = await getGlobalSettings();
         } catch (error) {
-            console.error("[Claude] Could not load global settings", error);
+            console.error("[PrestigeBounce] Could not load global settings", error);
             globalFailed = true;
         } finally {
             globalLoading = false;
@@ -92,7 +92,7 @@
                     await setModuleSettings("ClickGUI", $state.snapshot(settings));
                     notify("Menu bind updated", "keybinds");
                 } catch (error) {
-                    console.error("[Claude] Could not save the menu bind", error);
+                    console.error("[PrestigeBounce] Could not save the menu bind", error);
                     notify("Could not save the menu bind", "x");
                 }
             })();
@@ -110,7 +110,7 @@
                     globalSaveState = "saved";
                     setTimeout(() => globalSaveState = "idle", 1400);
                 } catch (error) {
-                    console.error("[Claude] Could not save global settings", error);
+                    console.error("[PrestigeBounce] Could not save global settings", error);
                     globalSaveState = "idle";
                     notify("Could not save settings", "x");
                 }

@@ -47,7 +47,8 @@
           width: 2px;
           border-radius: 0 2px 2px 0;
           background: transparent;
-          transition: background-color .16s ease;
+          transform: scaleY(0);
+          transition: background-color .16s ease, transform .22s cubic-bezier(.2, .8, .25, 1), box-shadow .2s ease;
         }
     }
 
@@ -71,6 +72,7 @@
 
             &::before {
               background: var(--hud-accent);
+              transform: scaleY(1);
               box-shadow: 0 0 8px color-mix(in srgb, var(--hud-accent) 60%, transparent);
             }
           }
@@ -97,6 +99,11 @@
         mask-position: center;
         mask-repeat: no-repeat;
         mask-size: contain;
+        transition: transform .18s cubic-bezier(.2, .8, .25, 1);
+    }
+
+    .category.selected .category-icon {
+        transform: scale(1.08);
     }
 
     .category-icon-size {

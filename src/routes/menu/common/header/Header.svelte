@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ClaudeWordmark from "../../../../components/ClaudeWordmark.svelte";
+    import PrestigeWordmark from "../../../../components/PrestigeWordmark.svelte";
     import Account from "./account/Account.svelte";
     import Notifications from "./Notifications.svelte";
     import {listen} from "../../../../integration/ws";
@@ -53,7 +53,7 @@
 
 <div class="header">
     <div class="logo-wrapper">
-        <ClaudeWordmark size={46} tagText="Client"/>
+        <PrestigeWordmark size={38} tagText="Theme"/>
     </div>
 
     <Notifications/>

@@ -57,6 +57,7 @@
       border-radius: 0 2px 2px 0;
       background: var(--tone);
       box-shadow: 0 0 10px color-mix(in srgb, var(--tone) 65%, transparent);
+      animation: tone-pulse 2.8s ease-in-out infinite;
     }
 
     &.success { --tone: #62ce91; }
@@ -73,6 +74,7 @@
     color: var(--tone);
     background: color-mix(in srgb, var(--tone) 13%, transparent);
     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tone) 18%, transparent);
+    animation: notification-icon-in .36s cubic-bezier(.2, .8, .25, 1) backwards;
   }
 
   .copy {
@@ -114,5 +116,15 @@
   @keyframes life {
     from { transform: scaleX(1); }
     to { transform: scaleX(0); }
+  }
+
+  @keyframes tone-pulse {
+    0%, 100% { opacity: .7; box-shadow: 0 0 6px color-mix(in srgb, var(--tone) 45%, transparent); }
+    50% { opacity: 1; box-shadow: 0 0 12px color-mix(in srgb, var(--tone) 72%, transparent); }
+  }
+
+  @keyframes notification-icon-in {
+    from { opacity: 0; transform: scale(.7) rotate(-6deg); }
+    to { opacity: 1; transform: scale(1) rotate(0); }
   }
 </style>

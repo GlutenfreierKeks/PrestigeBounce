@@ -1219,7 +1219,7 @@ export async function getMarketplaceScreenshots(query: MarketItemQuery = {}): Pr
             .filter(item => (item.screenshots?.length ?? 0) > 0)
             .map(item => [item.id, mapMarketScreenshots(item.screenshots)] as const));
     } catch (error) {
-        console.warn("[Claude] Could not load marketplace screenshots", error);
+        console.warn("[PrestigeBounce] Could not load marketplace screenshots", error);
         return new Map();
     }
 }
@@ -1243,7 +1243,7 @@ export async function getMarketplaceItem(id: number): Promise<MarketItemDetail> 
     const [result, publicItem] = await Promise.all([
         marketplaceRequest<RawMarketDetailResponse>(`/${id}`),
         requestPublicMarketplace<RawMarketItem>(`/${id}`).catch(error => {
-            console.warn(`[Claude] Could not load public marketplace details for ${id}`, error);
+            console.warn(`[PrestigeBounce] Could not load public marketplace details for ${id}`, error);
             return null;
         })
     ]);

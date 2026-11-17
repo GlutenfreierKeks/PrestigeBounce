@@ -31,7 +31,7 @@
             metadata = await getMetadata();
             await refreshComponents();
         } catch (cause) {
-            console.error("[Claude] Could not load HUD component catalog", cause);
+            console.error("[PrestigeBounce] Could not load HUD component catalog", cause);
             error = "Could not load the component catalog.";
         }
     });
@@ -103,7 +103,7 @@
             try {
                 await refreshComponents();
             } catch (cause) {
-                console.error("[Claude] Could not refresh HUD component catalog", cause);
+                console.error("[PrestigeBounce] Could not refresh HUD component catalog", cause);
                 error = "Could not refresh the component catalog.";
             }
             await tick();
@@ -144,7 +144,7 @@
             query = "";
             filterComponents();
         } catch (cause) {
-            console.error(`[Claude] Could not add HUD component ${component.name}`, cause);
+            console.error(`[PrestigeBounce] Could not add HUD component ${component.name}`, cause);
             error = `Could not add ${component.name}.`;
         } finally {
             adding = null;

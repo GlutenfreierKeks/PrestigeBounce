@@ -98,7 +98,7 @@
         try {
             revisions = (await getMarketplaceItemRevisions(id, 1, 6)).items;
         } catch (error) {
-            console.error(`[Claude] Could not load revisions for ${id}`, error);
+            console.error(`[PrestigeBounce] Could not load revisions for ${id}`, error);
             revisionsError = error instanceof Error ? error.message : "Revisions could not be loaded.";
         } finally {
             revisionsLoading = false;
@@ -111,7 +111,7 @@
         try {
             reviews = (await getMarketplaceItemReviews(id, 1, 5)).items;
         } catch (error) {
-            console.error(`[Claude] Could not load reviews for ${id}`, error);
+            console.error(`[PrestigeBounce] Could not load reviews for ${id}`, error);
             reviewsError = error instanceof Error ? error.message : "Reviews could not be loaded.";
         } finally {
             reviewsLoading = false;
@@ -128,7 +128,7 @@
             void loadRevisions();
             void loadReviews();
         } catch (error) {
-            console.error(`[Claude] Could not load marketplace item ${id}`, error);
+            console.error(`[PrestigeBounce] Could not load marketplace item ${id}`, error);
             failed = error instanceof Error ? error.message : "This item could not be loaded.";
         } finally {
             loading = false;
@@ -158,7 +158,7 @@
             );
             await onChanged();
         } catch (error) {
-            console.error(`[Claude] Could not update marketplace subscription for ${id}`, error);
+            console.error(`[PrestigeBounce] Could not update marketplace subscription for ${id}`, error);
             notify(error instanceof Error ? error.message : "Could not update the subscription", "x");
         } finally {
             subscriptionAction = null;

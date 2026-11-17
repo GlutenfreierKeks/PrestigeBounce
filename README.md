@@ -4,7 +4,7 @@
 
 **A LiquidBounce theme inspired by the Prestige client GUI.**
 
-Deep navy surfaces, soft violet accents and editorial typography — wrapped around a complete ClickGUI, HUD editor and every client screen. Powered entirely by live LiquidBounce data.
+Deep navy surfaces, soft violet accents and editorial typography — wrapped around a complete ClickGUI, HUD editor, animated loading screen and every client screen. Powered entirely by live LiquidBounce data.
 
 [![Svelte 5](https://img.shields.io/badge/Svelte-5-FF3E00?logo=svelte&logoColor=white)](https://svelte.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -23,6 +23,8 @@ Prestigebounce is a complete UI overhaul for LiquidBounce, inspired by the clean
 
 The theme is built entirely on real LiquidBounce data. Modules, settings, keybinds, configs, HUD elements and marketplace content are loaded through the client's REST API and synchronized over WebSocket, so toggles, bind changes and HUD values update live while the interface is open. Nothing is mocked or hardcoded.
 
+Motion is used sparingly: menus, module cards, HUD elements and overlays fade and slide into place, while every interactive control keeps the exact position and size of the static layout.
+
 ### ClickGUI
 
 - Custom sidebar with live module categories and counts
@@ -31,12 +33,14 @@ The theme is built entirely on real LiquidBounce data. Modules, settings, keybin
 - Dedicated views for Settings, Themes, Configs, Marketplace, Socials and Keybinds
 - Built-in HUD editor accessible straight from the sidebar
 - Toast feedback for module toggles, saves, binds and marketplace actions
+- Staggered entrances, animated view changes and hover/press feedback without moving any controls
 
 ### HUD editor
 
 - Drag-and-drop canvas with grid overlay and snapping
 - Per-element settings, enable/disable toggles and live previews
 - Add, arrange and configure every supported HUD component
+- Animated editor chrome, anchor guides and selection feedback
 - Layout persists across sessions and updates immediately in-game
 
 ### Client screens
@@ -46,11 +50,34 @@ The theme is built entirely on real LiquidBounce data. Modules, settings, keybin
 - Multiplayer server list with status, ping, favorites and direct connect
 - Alt manager with search, account types and account actions
 - Proxy manager with search, filters and quick actions
-- Connecting, disconnected, inventory, container and browser overlays
+- Connecting and disconnected screens with branded progress and session details
+- Shared header actions for fast navigation between client screens
+- Inventory, container and browser overlays in the same visual language
 
 ### HUD components
 
 `Watermark` · `FPS` · `Ping` · `Coordinates` · `PlayerInfo` · `TabGui` · `ArrayList` · `Notifications` · `Hotbar` · `Scoreboard` · `ArmorItems` · `InventoryStatistics` · `Inventory` · `CraftingInventory` · `EnderChestInventory` · `TargetHud` · `BlockCounter` · `Effects` · `Keystrokes` · `Taco` · `Image` · `Text` · `KeyBinds` · `ClosedCaptions`
+
+### Loading screen
+
+- Animated splash built around the Prestige mark and wordmark
+- Accent-tinted progress treatment with the theme's navy background
+- Configured through the theme manifest, so it appears before the client UI loads
+
+### Inventory and overlays
+
+- Custom inventory overlay that follows vanilla slot geometry
+- Player panel with health, food, experience, armor, effects and position
+- Container and Ender Chest panels driven by live slot data
+- Transparent presentation with pointer events passing through to the game
+- Matching connecting, disconnected and browser overlays
+
+### Motion
+
+- Staggered module and navigation entrances in the ClickGUI
+- Animated view changes, tag menus, view switches and toast feedback
+- HUD component entrances plus watermark, hotbar, TabGUI and notification accents
+- Motion is limited to opacity and transforms — no ClickGUI or HUD layout changes
 
 ### Customization
 
@@ -66,17 +93,17 @@ The theme is built entirely on real LiquidBounce data. Modules, settings, keybin
 | :---: | :---: |
 | ![ClickGUI](docs/screenshots/clickgui.png) | ![HUD editor](docs/screenshots/hud-editor.png) |
 
-| Marketplace | Keybinds |
+| Marketplace | Themes |
 | :---: | :---: |
-| ![Marketplace](docs/screenshots/marketplace.png) | ![Keybinds](docs/screenshots/keybinds.png) |
+| ![Marketplace](docs/screenshots/marketplace.png) | ![Themes](docs/screenshots/themes.png) |
 
-| Themes | Settings |
+| Keybinds | Settings |
 | :---: | :---: |
-| ![Themes](docs/screenshots/themes.png) | ![Settings](docs/screenshots/settings.png) |
+| ![Keybinds](docs/screenshots/keybinds.png) | ![Settings](docs/screenshots/settings.png) |
 
-| Configs | Socials |
+| Title screen | Inventory overlay |
 | :---: | :---: |
-| ![Configs](docs/screenshots/configs.png) | ![Socials](docs/screenshots/socials.png) |
+| ![Title screen](docs/screenshots/title.png) | ![Inventory overlay](docs/screenshots/inventory.png) |
 
 | Multiplayer | Singleplayer |
 | :---: | :---: |
@@ -85,6 +112,10 @@ The theme is built entirely on real LiquidBounce data. Modules, settings, keybin
 | Alt Manager | Proxy Manager |
 | :---: | :---: |
 | ![Alt manager](docs/screenshots/alt-manager.png) | ![Proxy manager](docs/screenshots/proxy-manager.png) |
+
+| Connecting | Disconnected |
+| :---: | :---: |
+| ![Connecting](docs/screenshots/connecting.png) | ![Disconnected](docs/screenshots/disconnected.png) |
 
 ## Installation
 

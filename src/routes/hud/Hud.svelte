@@ -83,10 +83,11 @@
 </script>
 
 <div class="hud" style="zoom: {zoom}%">
-    {#each renderedComponents as c (c.id)}
+    {#each renderedComponents as c, index (c.id)}
         {#if c.settings.enabled}
             <DraggableComponent
                     {inEditor}
+                    {index}
                     {onDragStateChange}
                     componentId={c.id}
                     componentName={c.name}

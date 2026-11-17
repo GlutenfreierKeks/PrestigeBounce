@@ -132,6 +132,7 @@
         border-radius: 50%;
         background: var(--hud-accent);
         box-shadow: 0 0 7px var(--hud-accent);
+        animation: target-dot-pulse 2.6s ease-in-out infinite;
     }
 
     .ping {
@@ -252,5 +253,10 @@
         gap: 3px;
         padding-left: 4px;
         border-left: 1px solid color-mix(in srgb, var(--hud-text) 6%, transparent);
+    }
+
+    @keyframes target-dot-pulse {
+        0%, 100% { opacity: .65; box-shadow: 0 0 5px var(--hud-accent); }
+        50% { opacity: 1; box-shadow: 0 0 10px var(--hud-accent); }
     }
 </style>

@@ -1,5 +1,7 @@
 <script lang="ts">
     import {onMount} from "svelte";
+    import {fly, fade} from "svelte/transition";
+    import {cubicOut} from "svelte/easing";
     import Icon from "./Icon.svelte";
     import Toast from "./Toast.svelte";
     import ModuleBrowser from "./ModuleBrowser.svelte";
@@ -11,6 +13,7 @@
     import KeybindsView from "./KeybindsView.svelte";
     import MarketplaceView from "./MarketplaceView.svelte";
     import HudEditor from "../tabs/hud_editor/HudEditor.svelte";
+    import PrestigeMark from "../../../components/PrestigeMark.svelte";
     import {claudeTheme} from "./theme.svelte";
     import {escapeLayer} from "../../../integration/escape";
     import {listen} from "../../../integration/ws";
@@ -41,6 +44,10 @@
     let toastTimer: ReturnType<typeof setTimeout> | undefined;
 
     const selectedModule = $derived(modules.find(module => module.name === selectedName) ?? null);
+
+    const viewKey = $derived(
+        selectedModule ? `module:${selectedModule.name}` : generalView !== null ? `view:${generalView}` : "browser"
+    );
 
     const displayedCategories = $derived.by(() => {
         if (categories.length > 0) {
@@ -111,7 +118,7 @@
         } catch (error) {
             modules = previous;
             notify("Could not update module", "x");
-            console.error(`[Claude] Failed to toggle ${name}`, error);
+            console.error(`[PrestigeBounce] Failed to toggle ${name}`, error);
         }
     }
 
@@ -126,7 +133,7 @@
                 activeCategory = displayedCategories[0];
             }
         } catch (error) {
-            console.error("[Claude] Could not load modules", error);
+            console.error("[PrestigeBounce] Could not load modules", error);
             loadError = "The client API could not be reached.";
         } finally {
             loading = false;
@@ -161,10 +168,10 @@
         <div class="claude-window">
             <aside class="claude-sidebar">
                 <div class="brand">
-                    <span class="brand-mark"><Icon name="crown" size={17}/></span>
+                    <span class="brand-mark"><PrestigeMark size={20}/></span>
                     <div class="brand-copy">
-                        <div class="brand-title"><span>Claude</span><em>Client</em></div>
-                        <div class="brand-subtitle">BETA RELEASE 4.30</div>
+                        <div class="brand-title"><span>Prestige</span><em>Bounce</em></div>
+                        <div class="brand-subtitle">Theme for LiquidBounce</div>
                     </div>
                 </div>
 
@@ -179,11 +186,12 @@
                                 Retry
                             </button>
                         {:else}
-                            {#each displayedCategories as category (category)}
+                            {#each displayedCategories as category, index (category)}
                                 <button
                                         type="button"
                                         class="nav-item"
                                         class:active={generalView === null && activeCategory === category}
+                                        style="--nav-delay: {Math.min(index, 14) * 24}ms"
                                         onclick={() => selectCategory(category)}
                                 >
                                     <Icon name={categoryIcon(category)} size={15}/>
@@ -198,11 +206,12 @@
 
                     <div class="nav-group">
                         <div class="nav-label">General</div>
-                        {#each generalNav as entry (entry.id)}
+                        {#each generalNav as entry, index (entry.id)}
                             <button
                                     type="button"
                                     class="nav-item"
                                     class:active={generalView === entry.id}
+                                    style="--nav-delay: {Math.min(index, 14) * 24}ms"
                                     onclick={() => selectGeneral(entry.id)}
                             >
                                 <Icon name={entry.icon} size={15}/>
@@ -215,6 +224,7 @@
                         <button
                                 type="button"
                                 class="nav-item"
+                                style="--nav-delay: {Math.min(generalNav.length, 14) * 24}ms"
                                 onclick={() => selectGeneral("hud")}
                         >
                             <Icon name="hud" size={15}/>
@@ -225,39 +235,49 @@
 
                 <div class="sidebar-footer">
                     <span class="footer-dot"></span>
-                    Claude Client
-                    <span class="footer-version">v4.30</span>
+                    PrestigeBounce
+                    <span class="footer-version">Theme</span>
                 </div>
             </aside>
 
             <main class="claude-main">
-                {#if selectedModule}
-                    <ModuleDetail
-                            module={selectedModule}
-                            onBack={() => selectedName = null}
-                            onToggle={toggleModule}
-                    />
-                {:else if generalView === "settings"}
-                    <SettingsView {notify}/>
-                {:else if generalView === "themes"}
-                    <ThemesView {notify}/>
-                {:else if generalView === "configs"}
-                    <ConfigsView {notify} onModulesChanged={loadModules}/>
-                {:else if generalView === "socials"}
-                    <SocialsView {notify}/>
-                {:else if generalView === "keybinds"}
-                    <KeybindsView {modules} {notify} onChanged={loadModules}/>
-                {:else if generalView === "marketplace"}
-                    <MarketplaceView {notify}/>
-                {:else}
-                    <ModuleBrowser
-                            {modules}
-                            category={activeCategory}
-                            {loading}
-                            onToggle={toggleModule}
-                            onOpen={openModule}
-                    />
-                {/if}
+                <div class="view-stack">
+                    {#key viewKey}
+                        <div
+                                class="view-panel"
+                                in:fly={{y: 8, duration: 240, easing: cubicOut}}
+                                out:fade={{duration: 120}}
+                        >
+                            {#if selectedModule}
+                                <ModuleDetail
+                                        module={selectedModule}
+                                        onBack={() => selectedName = null}
+                                        onToggle={toggleModule}
+                                />
+                            {:else if generalView === "settings"}
+                                <SettingsView {notify}/>
+                            {:else if generalView === "themes"}
+                                <ThemesView {notify}/>
+                            {:else if generalView === "configs"}
+                                <ConfigsView {notify} onModulesChanged={loadModules}/>
+                            {:else if generalView === "socials"}
+                                <SocialsView {notify}/>
+                            {:else if generalView === "keybinds"}
+                                <KeybindsView {modules} {notify} onChanged={loadModules}/>
+                            {:else if generalView === "marketplace"}
+                                <MarketplaceView {notify}/>
+                            {:else}
+                                <ModuleBrowser
+                                        {modules}
+                                        category={activeCategory}
+                                        {loading}
+                                        onToggle={toggleModule}
+                                        onOpen={openModule}
+                                />
+                            {/if}
+                        </div>
+                    {/key}
+                </div>
             </main>
 
             {#if toastMessage}
@@ -363,6 +383,7 @@
     background:
       linear-gradient(160deg, color-mix(in srgb, var(--claude-accent) 92%, white), color-mix(in srgb, var(--claude-accent) 60%, #251e5c));
     box-shadow: 0 0 18px color-mix(in srgb, var(--claude-accent) 32%, transparent);
+    animation: brand-glow 5.2s ease-in-out infinite;
   }
 
   .brand-copy {
@@ -436,14 +457,35 @@
     text-align: left;
     cursor: pointer;
     transition: color .15s ease, background-color .15s ease, border-color .15s ease;
+    animation: nav-item-in .36s cubic-bezier(.2, .8, .25, 1) backwards;
+    animation-delay: var(--nav-delay, 0ms);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 2px;
+      height: 15px;
+      border-radius: 2px;
+      background: var(--claude-accent);
+      opacity: 0;
+      transform: translateY(-50%) scaleY(.25);
+      transition: opacity .18s ease, transform .24s cubic-bezier(.2, .8, .25, 1), box-shadow .18s ease;
+    }
 
     :global(svg) {
       color: color-mix(in srgb, currentColor 88%, transparent);
+      transition: color .15s ease, transform .18s ease;
     }
 
     &:hover {
       color: var(--claude-text);
       background: color-mix(in srgb, var(--claude-text) 4.4%, transparent);
+
+      :global(svg) {
+        transform: translateX(1.5px);
+      }
     }
 
     &.active {
@@ -453,8 +495,15 @@
         linear-gradient(90deg, color-mix(in srgb, var(--claude-accent) 20%, transparent), color-mix(in srgb, var(--claude-accent) 8%, transparent));
       box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--claude-accent) 6%, transparent);
 
+      &::before {
+        opacity: 1;
+        transform: translateY(-50%) scaleY(1);
+        box-shadow: 0 0 10px color-mix(in srgb, var(--claude-accent) 60%, transparent);
+      }
+
       :global(svg) {
         color: var(--claude-accent);
+        transform: none;
       }
     }
   }
@@ -531,6 +580,7 @@
     border-radius: 50%;
     background: var(--claude-accent);
     box-shadow: 0 0 6px var(--claude-accent);
+    animation: footer-dot-pulse 3.2s ease-in-out infinite;
   }
 
   .footer-version {
@@ -543,6 +593,18 @@
     min-height: 0;
     padding: 30px 36px 27px;
     overflow: hidden;
+  }
+
+  .view-stack {
+    position: relative;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .view-panel {
+    position: absolute;
+    inset: 0;
+    min-height: 0;
   }
 
   .hud-fullscreen {
@@ -561,6 +623,21 @@
   @keyframes window-in {
     from { opacity: 0; transform: translateY(12px) scale(.988); }
     to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes nav-item-in {
+    from { opacity: 0; transform: translateX(-6px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes brand-glow {
+    0%, 100% { box-shadow: 0 0 14px color-mix(in srgb, var(--claude-accent) 24%, transparent); }
+    50% { box-shadow: 0 0 24px color-mix(in srgb, var(--claude-accent) 46%, transparent); }
+  }
+
+  @keyframes footer-dot-pulse {
+    0%, 100% { opacity: .55; box-shadow: 0 0 4px var(--claude-accent); }
+    50% { opacity: 1; box-shadow: 0 0 10px var(--claude-accent); }
   }
 
   @media (max-width: 1050px) {

@@ -76,7 +76,13 @@
             .dot {
               background: var(--hud-accent);
               box-shadow: 0 0 7px color-mix(in srgb, var(--hud-accent) 65%, transparent);
+              animation: tab-dot-pulse 2.8s ease-in-out infinite;
             }
         }
+    }
+
+    @keyframes tab-dot-pulse {
+        0%, 100% { opacity: .7; box-shadow: 0 0 5px color-mix(in srgb, var(--hud-accent) 45%, transparent); }
+        50% { opacity: 1; box-shadow: 0 0 9px color-mix(in srgb, var(--hud-accent) 72%, transparent); }
     }
 </style>

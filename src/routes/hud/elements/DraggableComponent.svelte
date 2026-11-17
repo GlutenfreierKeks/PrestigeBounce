@@ -20,6 +20,7 @@
     export let componentId: string;
     export let componentName: string;
     export let inEditor: boolean;
+    export let index = 0;
     export let onDragStateChange: ((state: HudEditorDragState) => void) | undefined = undefined;
     export let magneticallyReferenced = false;
     export let width: number | undefined = undefined;
@@ -334,7 +335,7 @@
         try {
             displayedZIndex = await bringComponentToFront(componentId);
         } catch (error) {
-            console.error(`[Claude] Could not bring ${componentName} to the front`, error);
+            console.error(`[PrestigeBounce] Could not bring ${componentName} to the front`, error);
         }
     }
 
@@ -472,7 +473,7 @@
             await setComponentAlignment(componentId, attempted);
             saveError = null;
         } catch (error) {
-            console.error(`[Claude] Could not save the position of ${componentName}`, error);
+            console.error(`[PrestigeBounce] Could not save the position of ${componentName}`, error);
             saveError = error instanceof Error ? error.message : "Could not save the HUD position";
             currentAlignment = {...alignment};
             pendingPropAlignment = undefined;
@@ -561,7 +562,7 @@
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div
             class="contained-element"
-            style={sizeStyleString}
+            style="{sizeStyleString} --hud-index: {Math.min(index, 12)};"
             class:editor-mode={inEditor}
             class:selected={inEditor && selected}
             class:magnetically-referenced={inEditor && magneticallyReferenced}
@@ -602,6 +603,8 @@
         min-width: 50px;
         min-height: 50px;
         border-radius: 3px;
+        animation: hud-element-in .38s cubic-bezier(.2, .8, .25, 1) backwards;
+        animation-delay: calc(var(--hud-index, 0) * 14ms);
     }
 
     .editor-mode {
@@ -673,5 +676,10 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         pointer-events: none;
+    }
+
+    @keyframes hud-element-in {
+        from { opacity: 0; transform: translateY(4px) scale(.995); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
     }
 </style>

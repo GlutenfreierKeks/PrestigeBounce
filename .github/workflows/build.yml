@@ -36,7 +36,9 @@ jobs:
         run: npm run build
 
       - name: Create dist archive
-        run: zip -r ${{ env.ZIP_NAME }}.zip dist/
+        run: |
+          mv dist prestigebounce
+          zip -r ${{ env.ZIP_NAME }}.zip prestigebounce/
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4

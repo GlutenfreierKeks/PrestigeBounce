@@ -1,5 +1,6 @@
 <script lang="ts">
     import Icon from "../../clickgui/claude/Icon.svelte";
+    import PrestigeMark from "../../../components/PrestigeMark.svelte";
     import {
         openLink,
         exitClient,
@@ -22,7 +23,7 @@
         try {
             clientInfo = await getClientInfo();
         } catch (error) {
-            console.error("[Claude] Could not read client info", error);
+            console.error("[PrestigeBounce] Could not read client info", error);
         }
 
         setTimeout(async () => {
@@ -38,7 +39,7 @@
                     });
                 }
             } catch (error) {
-                console.error("[Claude] Could not check for client updates", error);
+                console.error("[PrestigeBounce] Could not check for client updates", error);
             }
         }, 2000);
     });
@@ -52,11 +53,13 @@
 </script>
 
 <div class="title-screen">
+    <div class="crest-watermark" aria-hidden="true"><PrestigeMark size={560}/></div>
+
     <div class="content">
         <section class="hero">
             <div class="eyebrow">
                 <span class="eyebrow-line"></span>
-                LiquidBounce <span class="eyebrow-cross">×</span> Claude
+                LiquidBounce <span class="eyebrow-cross">×</span> PrestigeBounce
             </div>
 
             <h1>Choose your<br><em>next world.</em></h1>
@@ -155,6 +158,10 @@
                         <span>Minecraft</span>
                         <strong>{clientInfo?.gameVersion ?? "—"}</strong>
                     </div>
+                    <div class="meta-row">
+                        <span>Theme</span>
+                        <strong class="theme">PrestigeBounce</strong>
+                    </div>
                     {#if clientInfo?.development}
                         <div class="meta-row">
                             <span>Build</span>
@@ -219,7 +226,7 @@
             </button>
         </div>
 
-        <div class="footer-note">Claude for LiquidBounce</div>
+        <div class="footer-note">PrestigeBounce · Theme for LiquidBounce</div>
     </footer>
 </div>
 
@@ -234,18 +241,32 @@
     isolation: isolate;
   }
 
+  .crest-watermark {
+    position: absolute;
+    bottom: -250px;
+    left: -170px;
+    z-index: -1;
+    color: var(--claude-accent);
+    opacity: .045;
+    pointer-events: none;
+    transform: rotate(7deg);
+    filter: drop-shadow(0 0 80px color-mix(in srgb, var(--claude-accent) 35%, transparent));
+  }
+
   .content {
     flex: 1;
     min-height: 0;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 380px;
+    grid-template-columns: minmax(0, 1fr) 360px;
     align-items: center;
-    gap: clamp(28px, 4.5vw, 84px);
+    gap: clamp(32px, 4vw, 72px);
+    width: min(100%, 1400px);
+    margin-inline: auto;
   }
 
   .hero {
     min-width: 0;
-    max-width: 720px;
+    max-width: none;
     padding: 4px 0;
   }
 
@@ -292,7 +313,7 @@
   }
 
   .lede {
-    max-width: 500px;
+    max-width: 560px;
     color: var(--claude-text-dim);
     font-size: 14.5px;
     line-height: 1.65;
@@ -302,7 +323,7 @@
     display: flex;
     flex-direction: column;
     gap: 9px;
-    max-width: 660px;
+    max-width: 760px;
     margin-top: 31px;
   }
 
@@ -575,6 +596,14 @@
       &.dev {
         color: var(--claude-glint);
       }
+
+      &.theme {
+        color: var(--claude-glint);
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: 13px;
+        font-style: italic;
+        font-weight: 500;
+      }
     }
   }
 
@@ -672,6 +701,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 18px;
+    width: min(100%, 1400px);
+    margin-inline: auto;
     padding-top: 4px;
   }
 

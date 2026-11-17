@@ -1,6 +1,7 @@
 <script lang="ts">
     import ButtonContainer from "../common/buttons/ButtonContainer.svelte";
     import IconButton from "../common/buttons/IconButton.svelte";
+    import PrestigeMark from "../../../components/PrestigeMark.svelte";
     import {openScreen, toggleBasicMode} from "../../../integration/rest";
     import {fly} from "svelte/transition";
 </script>
@@ -8,6 +9,9 @@
 <!-- Clicks also reach the vanilla screen below, so this stays in its empty left strip. -->
 <div class="basic-menu" transition:fly|global={{duration: 700, x: -100}}>
     <div class="buttons">
+        <div class="brand">
+            <PrestigeMark size={24}/>
+        </div>
         <ButtonContainer vertical>
             <IconButton title="Full Mode" icon="liquidbounce" on:click={toggleBasicMode}/>
             <IconButton title="Click GUI" icon="clickgui" on:click={() => openScreen("clickgui")}/>
@@ -29,6 +33,14 @@
 
   .buttons {
     margin-left: 50px;
+  }
+
+  .brand {
+    display: grid;
+    place-items: center;
+    margin-bottom: 9px;
+    color: var(--claude-accent);
+    filter: drop-shadow(0 0 14px color-mix(in srgb, var(--claude-accent) 35%, transparent));
   }
 
   @media screen and (max-width: 1366px) {

@@ -109,7 +109,7 @@
     onMount(() => {
         getSession()
             .then(value => session = value)
-            .catch(error => console.error("[Claude] Could not load the current session", error));
+            .catch(error => console.error("[PrestigeBounce] Could not load the current session", error));
     });
 </script>
 

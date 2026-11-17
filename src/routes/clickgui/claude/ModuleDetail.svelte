@@ -30,7 +30,7 @@
         try {
             configurable = await getModuleSettings(module.name);
         } catch (error) {
-            console.error(`[Claude] Could not load settings for ${module.name}`, error);
+            console.error(`[PrestigeBounce] Could not load settings for ${module.name}`, error);
             failed = true;
         } finally {
             loading = false;

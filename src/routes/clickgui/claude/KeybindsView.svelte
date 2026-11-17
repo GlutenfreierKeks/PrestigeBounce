@@ -91,7 +91,7 @@
             notify(`${module.name} · ${formatKey(bind.boundKey)}`, "keybinds");
             cancelEdit();
         } catch (error) {
-            console.error(`[Claude] Could not update the bind for ${module.name}`, error);
+            console.error(`[PrestigeBounce] Could not update the bind for ${module.name}`, error);
             notify("Could not save the keybind", "x");
         } finally {
             saving = false;

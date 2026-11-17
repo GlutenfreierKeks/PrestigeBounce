@@ -4,6 +4,8 @@
     import type {StatusEffect} from "../../../integration/types";
     import {effectTextureUrl} from "../../../integration/rest";
     import Icon from "../../clickgui/claude/Icon.svelte";
+    import {flip} from "svelte/animate";
+    import {fly} from "svelte/transition";
 
     let effects: StatusEffect[] = [];
 
@@ -39,8 +41,12 @@
             <span class="header-count">{effects.length}</span>
         </div>
         <div class="list">
-            {#each effects as e}
-                <div class="effect">
+            {#each effects as e (e.effect + ":" + e.amplifier)}
+                <div
+                        class="effect"
+                        animate:flip={{duration: 200}}
+                        transition:fly={{x: 14, duration: 180}}
+                >
                     <span class="effect-icon">
                         <img src={effectTextureUrl(e.effect)} alt={e.localizedName}/>
                     </span>

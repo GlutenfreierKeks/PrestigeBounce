@@ -127,7 +127,7 @@
         const [modules, global] = await Promise.all([
             getModules(),
             getGlobalSettings().catch(error => {
-                console.error("[Claude] Could not capture global settings", error);
+                console.error("[PrestigeBounce] Could not capture global settings", error);
                 return undefined;
             })
         ]);
@@ -137,7 +137,7 @@
             try {
                 settings.set(module.name, await getModuleSettings(module.name));
             } catch (error) {
-                console.error(`[Claude] Could not capture ${module.name}`, error);
+                console.error(`[PrestigeBounce] Could not capture ${module.name}`, error);
             }
         }));
 
@@ -197,7 +197,7 @@
             tab = "personal";
             notify(`Config saved · ${name}`, "configs");
         } catch (error) {
-            console.error("[Claude] Could not create config", error);
+            console.error("[PrestigeBounce] Could not create config", error);
             formError = "Could not capture the current client settings.";
         } finally {
             busy = false;
@@ -249,19 +249,19 @@
             const settings = config.modules.filter(module => module.enabled && module.settings);
             await Promise.all(settings.map(module =>
                 setModuleSettings(module.name, $state.snapshot(module.settings!))
-                    .catch(error => console.error(`[Claude] Could not apply ${module.name}`, error))
+                    .catch(error => console.error(`[PrestigeBounce] Could not apply ${module.name}`, error))
             ));
 
             if (config.global) {
                 await setGlobalSettings($state.snapshot(config.global))
-                    .catch(error => console.error("[Claude] Could not apply global settings", error));
+                    .catch(error => console.error("[PrestigeBounce] Could not apply global settings", error));
             }
 
             await onModulesChanged();
             notify(`Config loaded · ${config.name}`, "configs");
             dialog = null;
         } catch (error) {
-            console.error("[Claude] Could not apply personal config", error);
+            console.error("[PrestigeBounce] Could not apply personal config", error);
             notify("Could not load this config", "x");
         } finally {
             busy = false;

@@ -7,11 +7,13 @@
     let {
         module,
         view = "list",
+        index = 0,
         onToggle,
         onOpen
     } = $props<{
         module: Module;
         view?: "list" | "grid";
+        index?: number;
         onToggle: (name: string, enabled: boolean) => void;
         onOpen: (module: Module) => void;
     }>();
@@ -22,6 +24,7 @@
 <div
         class="module-card {view}"
         class:enabled={module.enabled}
+        style="--enter-index: {Math.min(index, 14)};"
         role="button"
         tabindex="0"
         onclick={() => onOpen(module)}
@@ -66,11 +69,18 @@
     cursor: pointer;
     transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease;
     outline: none;
+    animation: module-card-in .34s cubic-bezier(.2, .8, .25, 1) backwards;
+    animation-delay: calc(var(--enter-index, 0) * 16ms);
 
     &:hover {
       border-color: var(--claude-border-strong);
       background: color-mix(in srgb, var(--claude-text) 3.6%, var(--claude-card));
       box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0) scale(.997);
     }
 
     &:focus-visible {
@@ -177,6 +187,17 @@
     &:hover {
       color: var(--claude-text);
       background: color-mix(in srgb, var(--claude-text) 6%, transparent);
+    }
+  }
+
+  @keyframes module-card-in {
+    from {
+      opacity: 0;
+      transform: translateY(7px) scale(.995);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
   }
 </style>

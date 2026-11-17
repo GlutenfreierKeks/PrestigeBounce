@@ -80,14 +80,14 @@
         try {
             clientInfo = await getClientInfo();
         } catch (error) {
-            console.error("[Claude] Could not read client info", error);
+            console.error("[PrestigeBounce] Could not read client info", error);
         }
 
         try {
             spooferConfigurable = await getSpooferSettings();
             autoConfig = (await getModule("AutoConfig")).enabled;
         } catch (error) {
-            console.error("[Claude] Could not load connection settings", error);
+            console.error("[PrestigeBounce] Could not load connection settings", error);
         }
 
         try {
@@ -96,7 +96,7 @@
             protocols = await getProtocols();
             selectedProtocol = await getSelectedProtocol();
         } catch (error) {
-            console.error("[Claude] Could not load server screen", error);
+            console.error("[PrestigeBounce] Could not load server screen", error);
             flashError("Could not reach the client API");
         }
 
@@ -128,7 +128,7 @@
         try {
             lanServers = await getLanServers();
         } catch (error) {
-            console.error("[Claude] Could not poll LAN servers", error);
+            console.error("[PrestigeBounce] Could not poll LAN servers", error);
         }
     }
 
@@ -154,7 +154,7 @@
             await removeServerRest(id);
             await refreshServers();
         } catch (error) {
-            console.error("[Claude] Could not remove server", error);
+            console.error("[PrestigeBounce] Could not remove server", error);
             flashError("Could not remove server");
         }
     }
@@ -186,7 +186,7 @@
             await setSelectedProtocol(protocol);
             selectedProtocol = await getSelectedProtocol();
         } catch (error) {
-            console.error("[Claude] Could not change protocol", error);
+            console.error("[PrestigeBounce] Could not change protocol", error);
             flashError("Could not change protocol");
         }
     }
@@ -207,7 +207,7 @@
             await orderServers(order);
             await refreshServers();
         } catch (error) {
-            console.error("[Claude] Could not reorder servers", error);
+            console.error("[PrestigeBounce] Could not reorder servers", error);
             flashError("Could not save server order");
             await refreshServers();
         } finally {
@@ -229,7 +229,7 @@
             await setSpooferSettings(spooferConfigurable);
             spooferConfigurable = await getSpooferSettings();
         } catch (error) {
-            console.error("[Claude] Could not save spoofer settings", error);
+            console.error("[PrestigeBounce] Could not save spoofer settings", error);
             flashError("Could not save spoofer settings");
         }
     }
@@ -240,7 +240,7 @@
             await setModuleEnabled("AutoConfig", autoConfig);
         } catch (error) {
             autoConfig = !autoConfig;
-            console.error("[Claude] Could not toggle AutoConfig", error);
+            console.error("[PrestigeBounce] Could not toggle AutoConfig", error);
             flashError("Could not toggle Auto Config");
         }
     }
@@ -468,6 +468,8 @@
     flex-direction: column;
     min-height: 0;
     gap: 14px;
+    width: min(100%, 1760px);
+    margin-inline: auto;
     isolation: isolate;
   }
 

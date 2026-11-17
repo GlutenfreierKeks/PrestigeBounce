@@ -4,7 +4,7 @@ export function readStored<T>(key: string, fallback: T): T {
         if (!raw) return fallback;
         return JSON.parse(raw) as T;
     } catch (error) {
-        console.error(`[Claude] Could not read ${key}`, error);
+        console.error(`[PrestigeBounce] Could not read ${key}`, error);
         return fallback;
     }
 }
@@ -14,7 +14,7 @@ export function writeStored(key: string, value: unknown): boolean {
         localStorage.setItem(key, JSON.stringify(value));
         return true;
     } catch (error) {
-        console.error(`[Claude] Could not write ${key}`, error);
+        console.error(`[PrestigeBounce] Could not write ${key}`, error);
         return false;
     }
 }

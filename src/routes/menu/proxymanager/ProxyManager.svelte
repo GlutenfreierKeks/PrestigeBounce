@@ -30,6 +30,7 @@
     import {listen} from "../../../integration/ws";
     import type {ProxyCheckResultEvent} from "../../../integration/events.js";
     import MenuPageHeader from "../common/MenuPageHeader.svelte";
+    import PageButton from "../common/buttons/PageButton.svelte";
     import Icon from "../../clickgui/claude/Icon.svelte";
 
     $: {
@@ -195,7 +196,12 @@
 {/if}
 
 <MenuPageHeader eyebrow="Network" title="Proxies"
-                 subtitle={`${proxies.length} proxies · ${renderedProxies.length} shown${isConnectedToProxy ? " · connected" : ""}`}/>
+                 subtitle={`${proxies.length} proxies · ${renderedProxies.length} shown${isConnectedToProxy ? " · connected" : ""}`}>
+    <svelte:fragment slot="actions">
+        <PageButton icon="clipboard" on:click={fromClipboard}>From clipboard</PageButton>
+        <PageButton variant="primary" icon="plus" on:click={() => addProxyModalVisible = true}>Add proxy</PageButton>
+    </svelte:fragment>
+</MenuPageHeader>
 
 <OptionBar>
     <Search on:search={handleSearch}/>
@@ -215,6 +221,16 @@
                     ? "Add a SOCKS5 or HTTP proxy to route your connection through it."
                     : "Try a different search or clear the country and type filters."}
         </p>
+        {#if proxies.length === 0}
+            <div class="empty-actions">
+                <PageButton variant="primary" icon="plus" on:click={() => addProxyModalVisible = true}>
+                    Add proxy
+                </PageButton>
+                <PageButton icon="clipboard" on:click={fromClipboard}>
+                    From clipboard
+                </PageButton>
+            </div>
+        {/if}
     </svelte:fragment>
 
     {#each renderedProxies as proxy}
@@ -261,3 +277,11 @@
         <IconTextButton icon="icon-back.svg" title="Back" on:click={() => deleteScreen()}/>
     </ButtonContainer>
 </BottomButtonWrapper>
+
+<style lang="scss">
+  .empty-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+  }
+</style>

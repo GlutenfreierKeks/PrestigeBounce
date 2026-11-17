@@ -5,6 +5,7 @@
     import ModuleCard from "./ModuleCard.svelte";
     import {escapeLayer} from "../../../integration/escape";
     import {setItem} from "../../../integration/persistent_storage";
+    import {fly, fade} from "svelte/transition";
     import type {Module} from "../../../integration/types";
 
     let {
@@ -120,6 +121,7 @@
                 type="button"
                 class="filter-chip"
                 class:active={tag !== null || filterOpen}
+                class:open={filterOpen}
                 bind:this={filterButton}
                 onclick={toggleFilter}
                 disabled={loading || tags.length === 0}
@@ -152,7 +154,13 @@
     </div>
 
     {#if filterOpen}
-        <div class="tag-menu" style={menuStyle} role="menu">
+        <div
+                class="tag-menu"
+                style={menuStyle}
+                role="menu"
+                in:fly={{y: -6, duration: 160}}
+                out:fade={{duration: 100}}
+        >
             <button type="button" class="tag-option" class:selected={tag === null} onclick={() => chooseTag(null)}>
                 <span>All tags</span>
                 {#if tag === null}<Icon name="check" size={13}/>{/if}
@@ -183,16 +191,19 @@
                 {/if}
             </div>
         {:else}
-            <div class="module-list" class:grid={view === "grid"}>
-                {#each visibleModules as module (module.name)}
-                    <ModuleCard
-                            {module}
-                            {view}
-                            onToggle={onToggle}
-                            onOpen={onOpen}
-                    />
-                {/each}
-            </div>
+            {#key view}
+                <div class="module-list" class:grid={view === "grid"}>
+                    {#each visibleModules as module, index (module.name)}
+                        <ModuleCard
+                                {module}
+                                {view}
+                                {index}
+                                onToggle={onToggle}
+                                onOpen={onOpen}
+                        />
+                    {/each}
+                </div>
+            {/key}
         {/if}
     </div>
 </div>
@@ -269,10 +280,18 @@
     cursor: pointer;
     transition: border-color .16s ease, color .16s ease, background-color .16s ease;
 
+    :global(svg) {
+      transition: transform .2s ease;
+    }
+
     &:hover:not(:disabled), &.active {
       color: var(--claude-text);
       border-color: var(--claude-border-strong);
       background: color-mix(in srgb, var(--claude-text) 5.5%, transparent);
+    }
+
+    &.open :global(svg) {
+      transform: rotate(180deg);
     }
 
     &:disabled {
@@ -297,11 +316,15 @@
       background: transparent;
       color: var(--claude-text-muted);
       cursor: pointer;
-      transition: color .16s ease, background-color .16s ease;
+      transition: color .16s ease, background-color .16s ease, transform .12s ease;
 
       &:hover {
         color: var(--claude-text-dim);
         background: color-mix(in srgb, var(--claude-text) 4%, transparent);
+      }
+
+      &:active {
+        transform: scale(.9);
       }
 
       &.active {
@@ -341,6 +364,7 @@
     min-height: 210px;
     color: var(--claude-text-muted);
     font-size: 11.5px;
+    animation: state-in .26s ease backwards;
 
     .loader {
       width: 15px;
@@ -365,6 +389,11 @@
 
   @keyframes spin {
     to { transform: rotate(360deg); }
+  }
+
+  @keyframes state-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   @media (max-width: 1080px) {

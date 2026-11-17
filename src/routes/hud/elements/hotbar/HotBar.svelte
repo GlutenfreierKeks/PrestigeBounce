@@ -4,7 +4,7 @@
     import type {PlayerData, TextComponent as TTExtComponent} from "../../../../integration/types";
     import {onMount} from "svelte";
     import {getPlayerData} from "../../../../integration/rest";
-    import {fade} from "svelte/transition";
+    import {fade, fly} from "svelte/transition";
     import TextComponent from "../../../menu/common/TextComponent.svelte";
     import type {ClientPlayerDataEvent, OverlayMessageEvent} from "../../../../integration/events";
 
@@ -66,13 +66,13 @@
 {#if playerData && playerData.gameMode !== "spectator"}
     <div class="hotbar">
         {#if overlayMessage !== null}
-            <div class="overlay-message" out:fade={{duration: 200}}
+            <div class="overlay-message" in:fly={{y: 6, duration: 180}} out:fade={{duration: 200}}
                  style="max-width: {slotsElement?.offsetWidth ?? 0}px">
                 <TextComponent fontSize={13} textComponent={overlayMessage.text} allowPreformatting={true} />
             </div>
         {/if}
         {#if showItemStackName && itemStackName !== null}
-            <div class="item-name" out:fade={{duration: 200}}>
+            <div class="item-name" in:fly={{y: -5, duration: 180}} out:fade={{duration: 200}}>
                 <TextComponent fontSize={12} textComponent={itemStackName}/>
             </div>
         {/if}
@@ -160,7 +160,7 @@
         </div>
 
         {#if playerData?.offHandStack.identifier !== "minecraft:air"}
-            <div class="offhand-slot"></div>
+            <div class="offhand-slot" transition:fade={{duration: 180}}></div>
         {/if}
     </div>
 {/if}
@@ -206,6 +206,8 @@
         0 0 12px color-mix(in srgb, var(--hud-accent) 20%, transparent);
       z-index: 1;
       pointer-events: none;
+      transition: left .22s cubic-bezier(.25, .8, .3, 1);
+      animation: slider-pulse 3.4s ease-in-out infinite;
     }
 
     .slots {
@@ -255,5 +257,18 @@
     margin-bottom: 10px;
     overflow: hidden;
     text-shadow: 0 2px 10px rgba(0, 0, 0, .6);
+  }
+
+  @keyframes slider-pulse {
+    0%, 100% {
+      box-shadow:
+        inset 0 0 16px color-mix(in srgb, var(--hud-accent) 13%, transparent),
+        0 0 12px color-mix(in srgb, var(--hud-accent) 20%, transparent);
+    }
+    50% {
+      box-shadow:
+        inset 0 0 18px color-mix(in srgb, var(--hud-accent) 20%, transparent),
+        0 0 18px color-mix(in srgb, var(--hud-accent) 32%, transparent);
+    }
   }
 </style>

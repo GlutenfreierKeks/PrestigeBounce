@@ -1,6 +1,7 @@
 <script lang="ts">
     import Header from "./header/Header.svelte";
-    import {fly} from "svelte/transition";
+    import PrestigeMark from "../../../components/PrestigeMark.svelte";
+    import {fade, fly} from "svelte/transition";
     import {onMount} from "svelte";
 
     const transitionDuration = 700; // TODO: suboptimal
@@ -16,6 +17,15 @@
 
 <div class="menu">
     <div class="menu-ambient"></div>
+
+    {#if !ready}
+        <div class="menu-boot" out:fade={{duration: 320}}>
+            <span class="boot-mark"><PrestigeMark size={34}/></span>
+            <span class="boot-name">Prestige<span>Bounce</span></span>
+            <span class="boot-track"><span></span></span>
+            <span class="boot-caption">Preparing the interface</span>
+        </div>
+    {/if}
 
     {#if ready}
         <div transition:fly|global={{duration: 700, y: -100}}>
@@ -56,6 +66,87 @@
     display: flex;
     flex-direction: column;
     will-change: transform;
+  }
+
+  .menu-boot {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 14px;
+    pointer-events: none;
+    background:
+      radial-gradient(38% 46% at 50% 46%, color-mix(in srgb, var(--claude-accent) 10%, transparent), transparent 72%),
+      color-mix(in srgb, #05060e 92%, transparent);
+  }
+
+  .boot-mark {
+    color: var(--claude-accent);
+    filter: drop-shadow(0 0 22px color-mix(in srgb, var(--claude-accent) 40%, transparent));
+    animation: boot-breathe 1.7s ease-in-out infinite;
+  }
+
+  .boot-name {
+    color: var(--claude-text);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 29px;
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: -.03em;
+    line-height: 1;
+
+    span {
+      color: var(--claude-glint);
+      font-weight: 500;
+    }
+  }
+
+  .boot-track {
+    position: relative;
+    width: 156px;
+    height: 1px;
+    margin-top: 3px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--claude-text) 9%, transparent);
+
+    span {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 44%;
+      background: linear-gradient(90deg, transparent, var(--claude-accent), transparent);
+      animation: boot-slide 1.25s ease-in-out infinite;
+    }
+  }
+
+  .boot-caption {
+    color: var(--claude-text-muted);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  @keyframes boot-breathe {
+    0%, 100% { opacity: .62; transform: scale(.96); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes boot-slide {
+    0% { transform: translateX(-120%); }
+    100% { transform: translateX(360%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .boot-mark, .boot-track span {
+      animation: none;
+    }
+
+    .boot-track span {
+      width: 100%;
+    }
   }
 
   @media screen and (max-width: 1366px) {

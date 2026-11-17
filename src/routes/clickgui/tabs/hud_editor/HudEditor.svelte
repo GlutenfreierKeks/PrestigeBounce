@@ -149,7 +149,7 @@
         <span class="hint"><Icon name="move" size={11}/> Drag to move</span>
         <span class="hint"><Icon name="settings" size={11}/> Click to configure</span>
         <span class="hint"><Icon name="grid" size={11}/> Hold Shift to ignore snapping</span>
-        <span class="footer-brand">Claude <em>HUD</em></span>
+        <span class="footer-brand">Prestige <em>HUD</em></span>
     </footer>
 </div>
 
@@ -196,6 +196,7 @@
     box-shadow: 0 20px 44px rgba(0, 0, 0, .45), 0 0 28px color-mix(in srgb, var(--claude-accent) 7%, transparent), inset 0 1px 0 rgba(255, 255, 255, .05);
     transform: translateX(-50%);
     backdrop-filter: blur(10px);
+    animation: chrome-in .34s cubic-bezier(.2, .8, .25, 1) both;
 
     &::before {
       content: "";
@@ -280,12 +281,16 @@
     font-weight: 600;
     letter-spacing: .15px;
     cursor: pointer;
-    transition: color .16s ease, background-color .16s ease, border-color .16s ease, box-shadow .16s ease;
+    transition: color .16s ease, background-color .16s ease, border-color .16s ease, box-shadow .16s ease, transform .1s ease;
 
     &:hover {
       color: var(--claude-text);
       border-color: var(--claude-border-strong);
       background: color-mix(in srgb, var(--claude-text) 6%, transparent);
+    }
+
+    &:active {
+      transform: translateY(1px);
     }
 
     &.active {
@@ -349,6 +354,7 @@
     transform: translateX(-50%);
     backdrop-filter: blur(8px);
     white-space: nowrap;
+    animation: footer-in .38s cubic-bezier(.2, .8, .25, 1) both;
   }
 
   .hint {
@@ -395,6 +401,7 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     pointer-events: none;
+    animation: anchor-zones-in .18s ease both;
   }
 
   .anchor-zone {
@@ -481,6 +488,7 @@
     pointer-events: none;
     background: color-mix(in srgb, var(--claude-accent) 58%, transparent);
     box-shadow: 0 0 8px color-mix(in srgb, var(--claude-accent) 45%, transparent);
+    animation: guide-pulse 1.2s ease-in-out infinite;
 
     &.vertical {
       top: 0;
@@ -495,6 +503,26 @@
       height: 1px;
       transform: translateY(-50%);
     }
+  }
+
+  @keyframes chrome-in {
+    from { opacity: 0; transform: translate(-50%, -10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+
+  @keyframes footer-in {
+    from { opacity: 0; transform: translate(-50%, 8px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+  }
+
+  @keyframes anchor-zones-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes guide-pulse {
+    0%, 100% { opacity: .55; }
+    50% { opacity: 1; }
   }
 
   @media (max-width: 640px) {

@@ -13,8 +13,12 @@ The theme is built entirely on real LiquidBounce data. Modules, settings, keybin
 
 - Custom ClickGUI with category navigation, search, module cards, per-module settings, keybinds, configs, themes, socials and the marketplace
 - Integrated HUD editor with drag-and-drop positioning, per-element settings, enable/disable toggles, live previews and persistent layouts
-- Restyled title, multiplayer, singleplayer, alt manager, proxy manager and customize screens
-- Custom HUD components, including Watermark, FPS, Ping, Coordinates, PlayerInfo, TabGUI, ArrayList, notifications, TargetHUD, Keystrokes, KeyBinds and inventory overlays
+- Animated loading screen built around the Prestige mark and wordmark, with an accent-tinted progress treatment
+- Restyled title, multiplayer, singleplayer, alt manager, proxy manager, customize, connecting and disconnected screens
+- Shared header actions for fast navigation between client screens
+- Custom inventory overlay that follows vanilla 176×166 slot geometry, with live health, food, experience, armor, effects and position, plus container and Ender Chest panels
+- Custom HUD components, including Watermark, FPS, Ping, Coordinates, PlayerInfo, TabGUI, ArrayList, notifications, TargetHUD, Keystrokes and KeyBinds
+- Subtle motion throughout the ClickGUI and HUD — staggered entrances, animated view changes, hover and press feedback — without moving any controls
 - Custom accent color and optional spaced module names
 - Playfair Display and Inter font pairing
 - Full compatibility with the LiquidBounce theme system and marketplace

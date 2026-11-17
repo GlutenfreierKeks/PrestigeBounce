@@ -90,7 +90,7 @@
             nestedSettings = settings.value.filter(setting => setting !== enabledSetting);
             saveError = null;
         } catch (error) {
-            console.error(`[Claude] Could not load settings for ${name}`, error);
+            console.error(`[PrestigeBounce] Could not load settings for ${name}`, error);
             failed = true;
         } finally {
             loading = false;
@@ -123,7 +123,7 @@
             await setComponentSettings(id, configurable);
             saveError = null;
         } catch (error) {
-            console.error(`[Claude] Could not save settings for ${name}`, error);
+            console.error(`[PrestigeBounce] Could not save settings for ${name}`, error);
             saveError = error instanceof Error ? error.message : "Could not save the settings";
         } finally {
             saving = false;
