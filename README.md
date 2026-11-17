@@ -184,11 +184,55 @@ Copy the contents of the generated `dist` folder into `themes/prestigebounce`, t
 
 Vite hot reloads the UI as you edit. The client connection stays live, so module toggles, settings and HUD values update without reopening the interface.
 
+### Local testing
+
+The fastest way to explore the theme without starting Minecraft is the bundled mock preview:
+
+```bash
+npm run dev:local
+```
+
+This starts a mock LiquidBounce API, starts Vite and opens the title screen in your browser. The mock includes modules, settings, HUD components, inventory contents, servers, worlds, accounts, proxies and marketplace entries, so every screen is interactive.
+
+Useful preview routes:
+
+```text
+http://localhost:5173/#/title?port=54812&static
+http://localhost:5173/#/clickgui?port=54812&static
+http://localhost:5173/#/hud?port=54812&static
+http://localhost:5173/#/inventory?port=54812&static
+```
+
+Press `Ctrl+C` in the terminal to stop the mock and Vite. Set `NO_OPEN=1` to skip opening the browser, or override the ports with `VITE_PORT` and `MOCK_PORT`.
+
+To test the current source directly inside LiquidBounce, keep `npm run dev` running and load the dev server in-game:
+
+```text
+.client theme set http://localhost:5173/
+```
+
+To install the built theme into your local LiquidBounce themes folder:
+
+```bash
+npm run install:local
+```
+
+The command creates `themes/prestigebounce-local` next to any marketplace installation. Then run:
+
+```text
+.client theme reload
+.client theme set prestigebounce-local
+```
+
+Set `LIQUIDBOUNCE_DIR` if your client is installed somewhere other than the default LiquidLauncher directory.
+
 ### Useful commands
 
 | Command | Description |
 | --- | --- |
 | `npm run dev` | Start the Vite development server |
+| `npm run dev:local` | Start the mock API and Vite, then open the browser preview |
+| `npm run install:local` | Build and install the theme into your local LiquidBounce folder |
 | `npm run check` | Run Svelte and TypeScript diagnostics |
 | `npm run build` | Create an optimized production build in `dist` |
 | `npm run preview` | Preview the production build locally |
@@ -219,8 +263,10 @@ The workflow reads `MARKETPLACE_ITEM_ID` and `ZIP_NAME` from `.github/workflows/
 
 ```text
 PrestigeBounce/
+├── dev/                       Local mock API and icon fixtures
 ├── docs/
 │   └── screenshots/           README gallery
+├── scripts/                   Local preview and theme installer
 ├── public/
 │   ├── components/            HUD component definitions
 │   ├── fonts/                 Playfair Display and Inter
